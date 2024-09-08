@@ -13,11 +13,23 @@ class TestFamilyTree(unittest.TestCase):
         self.jane = FamilyMember(IndividualProfile(first_name="Jane", last_name="Doe", birth_year=1982))
         self.junior = FamilyMember(IndividualProfile(first_name="Junior", last_name="Doe", birth_year=2010))
 
+        self.bob = FamilyMember(IndividualProfile(first_name="Bob", middle_name="Elen", last_name="Barker", birth_year=1980))
+        self.brittany = FamilyMember(IndividualProfile(first_name="Brittany", middle_name="Esther", last_name="Barker", birth_year=1980))
+        self.bella = FamilyMember(IndividualProfile(first_name="Bella", middle_name="Enid", last_name="Barker", birth_year=1980))
+
     def test_add_child(self):
         """Test that a child is correctly added to a parent."""
         self.john.add_child(self.junior)
         self.assertIn(self.junior, self.john.children)
         self.assertIn(self.john, self.junior.parents)
+
+    def test_add_two_children(self):
+        """Test that two children are added as expected."""
+        self.bob.add_children([self.brittany, self.bella])
+        self.assertIn(self.bob, self.brittany.parents)
+        self.assertIn(self.bob, self.bella.parents)
+        self.assertIn(self.brittany, self.bob.children)
+        self.assertIn(self.bella, self.bob.children)
 
     def test_add_parent(self):
         """Test that adding a parent works as expected."""
